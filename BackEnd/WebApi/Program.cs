@@ -13,8 +13,11 @@ builder.Services.AddSingleton(provider =>
     ConexionSingleton.GetInstance(provider.GetRequiredService<IConfiguration>()));
 
 // Registrar el repositorio y la capa de dominio
-builder.Services.AddScoped<AlumnoRepository>();
-builder.Services.AddScoped<AlumnoDomain>();
+//builder.Services.AddScoped<AlumnoRepository>();
+//builder.Services.AddScoped<AlumnoDomain>();
+
+builder.Services.AddScoped<ProveedorRepository>();
+builder.Services.AddScoped<ProveedorDomain>();
 
 // Registrar los controladores
 builder.Services.AddControllers();
