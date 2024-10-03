@@ -1,5 +1,6 @@
 using CapaDatos;
 using CapaDomain;
+using CapaEntidad;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,9 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddScoped<AlumnoRepository>();
 builder.Services.AddScoped<AlumnoDomain>();
 
+
+builder.Services.AddScoped<DetallesOrdenCompraRepository>();
+builder.Services.AddScoped<DetallesOrdenCompraDomain>();
 // Registrar los controladores
 builder.Services.AddControllers();
 
