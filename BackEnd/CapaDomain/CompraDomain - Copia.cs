@@ -3,11 +3,11 @@ using CapaDatos;
 
 namespace CapaDomain
 {
-    public class AlumnoDomain
+    public class CompraDomain
     {
         private readonly AlumnoRepository _alumnoRepository;
 
-        public AlumnoDomain(AlumnoRepository alumnoRepository)
+        public CompraDomain(AlumnoRepository alumnoRepository)
         {
            
                 _alumnoRepository = alumnoRepository;     
@@ -38,6 +38,19 @@ namespace CapaDomain
                 throw;
             }
             
+        }
+
+        public int ActualizararAlumno(Alumno oAlumno)
+        {
+            try
+            {
+                return _alumnoRepository.InsertarAlumno(oAlumno);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }
