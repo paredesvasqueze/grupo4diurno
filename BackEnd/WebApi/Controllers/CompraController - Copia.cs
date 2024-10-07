@@ -15,17 +15,17 @@ namespace WebApi.Controllers
             _CompraController = CompraController;
         }
 
-        [HttpGet("ObtenerAlumnoTodos")]
-        public IActionResult ObtenerAlumnoTodos()
+        [HttpGet("ObtenerCompraTodos")]
+        public IActionResult ObtenerCompraTodos()
         {
-            var alumnos = _CompraController.ObtenerAlumnoTodos();
-            return Ok(alumnos);
+            var Compras = _CompraController.ObtenerCompraTodos();
+            return Ok(Compras);
         }
 
-        [HttpPost("InsertarAlumno")]
-        public IActionResult InsertarAlumno(Alumno oAlumno)
+        [HttpPost("InsertarCompra")]
+        public IActionResult InsertarCompra(Compra oCompra)
         {
-            var id = _CompraController.InsertarAlumno(oAlumno);
+            var id = _CompraController.InsertarCompra(oCompra);
             return Ok(id);
         }
     }

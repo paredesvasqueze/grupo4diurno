@@ -5,19 +5,19 @@ namespace CapaDomain
 {
     public class CompraDomain
     {
-        private readonly AlumnoRepository _alumnoRepository;
+        private readonly CompraRepository _CompraRepository;
 
-        public CompraDomain(AlumnoRepository alumnoRepository)
+        public CompraDomain(CompraRepository CompraRepository)
         {
            
-                _alumnoRepository = alumnoRepository;     
+                _CompraRepository = CompraRepository;     
         }
 
-        public IEnumerable<Alumno> ObtenerAlumnoTodos()
+        public IEnumerable<Compra> ObtenerCompraTodos()
         {
             try
             {
-                return _alumnoRepository.ObtenerAlumnoTodos();
+                return _CompraRepository.ObtenerCompraTodos();
             }
             catch (Exception)
             {
@@ -27,11 +27,11 @@ namespace CapaDomain
            
         }
 
-        public int InsertarAlumno(Alumno oAlumno)
+        public int InsertarCompra(Compra oCompra)
         {
             try
             {
-                return _alumnoRepository.InsertarAlumno(oAlumno);
+                return _CompraRepository.InsertarCompra(oCompra);
             }
             catch (Exception)
             {
@@ -40,11 +40,11 @@ namespace CapaDomain
             
         }
 
-        public int ActualizararAlumno(Alumno oAlumno)
+        public int ActualizararCompra(Compra oCompra)
         {
             try
             {
-                return _alumnoRepository.InsertarAlumno(oAlumno);
+                return _CompraRepository.InsertarCompra(oCompra);
             }
             catch (Exception)
             {
