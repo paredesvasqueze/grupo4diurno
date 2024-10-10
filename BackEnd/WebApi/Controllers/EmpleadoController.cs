@@ -41,14 +41,6 @@ namespace WebApi.Controllers
             var id = _EmpleadoDomain.EliminarEmpleado(cEmpleado);
             return Ok(id);
         }
-        [HttpPost("SeleccionarEmpleado")]
-        public IActionResult SeleccionarEmpleado(Empleado cEmpleado)
-        {
-            var id = _EmpleadoDomain.SeleccionarEmpleado(cEmpleado);
-            return Ok(id);
-        }
-
-
     }
 }
 

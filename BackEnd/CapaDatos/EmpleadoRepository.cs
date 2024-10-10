@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<Empleado> lstFound = new List<Empleado>();
-                var query = "USP_GET_Empleado_Todos";
+                var query = "SeleccionarEmpleado";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<Empleado>(connection, query, param, commandType: CommandType.StoredProcedure);
@@ -89,24 +89,9 @@ namespace CapaDatos
                 param.Add("@nIdEmpleado", cEmpleado.nIdEmpleado);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
-
-
-        }
-
-        public int SeleccionarEmpleado(Empleado cEmpleado)
-        {
-            using (var connection = _conexionSingleton.GetConnection())
-            {
-                connection.Open();
-
-                var query = "SeleccionarEmpleado";
-                var param = new DynamicParameters();
-                return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
-            }
-
-
         }
     }
 }
+
 
 

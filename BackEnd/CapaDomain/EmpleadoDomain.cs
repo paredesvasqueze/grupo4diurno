@@ -9,8 +9,8 @@ namespace CapaDomain
 
         public EmpleadoDomain(EmpleadoRepository EmpleadoRepository)
         {
-           
-                _EmpleadoRepository = EmpleadoRepository;     
+
+            _EmpleadoRepository = EmpleadoRepository;
         }
 
         public IEnumerable<Empleado> ObtenerEmpleadoTodos()
@@ -24,7 +24,7 @@ namespace CapaDomain
 
                 throw;
             }
-           
+
         }
 
         public int InsertarEmpleado(Empleado cEmpleado)
@@ -37,7 +37,7 @@ namespace CapaDomain
             {
                 throw;
             }
-            
+
         }
         public int ActualizarEmpleado(Empleado cEmpleado)
         {
@@ -62,19 +62,8 @@ namespace CapaDomain
             {
                 throw;
             }
-
         }
-        public int SeleccionarEmpleado(Empleado cEmpleado)
-        {
-            try
-            {
-                return _EmpleadoRepository.SeleccionarEmpleado(cEmpleado);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
 
-        }
     }
 }
+

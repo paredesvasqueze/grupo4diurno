@@ -63,18 +63,7 @@ namespace CapaDomain
                 throw;
             }
 
-        }
-        public int SeleccionarProveedor(Proveedor oProveedor)
-        {
-            try
-            {
-                return _ProveedorRepository.EliminarProveedor(oProveedor);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
+        }  
         }
     }
-}
+

@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<Proveedor> lstFound = new List<Proveedor>();
-                var query = "USP_GET_Proveedor_Todos";
+                var query = "SeleccionarProveedor";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<Proveedor>(connection, query, param, commandType: CommandType.StoredProcedure);
@@ -89,22 +89,10 @@ namespace CapaDatos
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
 
+              }
 
         }
-
-        public int SeleccionarProveedor(Proveedor cProveedor)
-        {
-            using (var connection = _conexionSingleton.GetConnection())
-            {
-                connection.Open();
-
-                var query = "SeleccionarProveedor";
-                var param = new DynamicParameters();
-                return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
-            }
-
-
-        }
-    }
 }
+
+
 

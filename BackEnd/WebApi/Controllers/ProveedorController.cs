@@ -15,7 +15,7 @@ namespace WebApi.Controllers
             _ProveedorDomain = ProveedorDomain;
         }
 
-        [HttpGet("ObtenerProveedorTodos")]
+        [HttpGet("ObtenerProveedorTodos(")]
         public IActionResult ObtenerProveedorTodos()
         {
             var Proveedors = _ProveedorDomain.ObtenerProveedorTodos();
@@ -41,14 +41,6 @@ namespace WebApi.Controllers
             var id = _ProveedorDomain.EliminarProveedor(oProveedor);
             return Ok(id);
         }
-        [HttpPost("SeleccionarProveedor")]
-        public IActionResult SeleccionarProveedor(Proveedor oProveedor)
-        {
-            var id = _ProveedorDomain.SeleccionarProveedor(oProveedor);
-            return Ok(id);
-        }
-
-
     }
 }
 
