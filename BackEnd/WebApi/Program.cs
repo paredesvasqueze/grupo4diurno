@@ -21,16 +21,11 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddScoped<DetallesOrdenCompraRepository>();
 builder.Services.AddScoped<DetallesOrdenCompraDomain>();
 
-<<<<<<< HEAD
 builder.Services.AddScoped<InventarioRepository>();
 builder.Services.AddScoped<InventarioDomain>();
-=======
-=======
-=======
->>>>>>> 18e5f0b3a4a444ba9a5bf7e691581e891f80d48e
+
 builder.Services.AddScoped<ProveedorRepository>();
 builder.Services.AddScoped<ProveedorDomain>();
-
 
 builder.Services.AddScoped<OrdenCompraRepository>();
 builder.Services.AddScoped<OrdenCompraDomain>();
