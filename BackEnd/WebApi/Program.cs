@@ -21,6 +21,10 @@ builder.Services.AddSingleton(provider =>
 
 builder.Services.AddScoped<DetallesOrdenCompraRepository>();
 builder.Services.AddScoped<DetallesOrdenCompraDomain>();
+
+builder.Services.AddScoped<InventarioRepository>();
+builder.Services.AddScoped<InventarioDomain>();
+=======
 =======
 builder.Services.AddScoped<ProveedorRepository>();
 builder.Services.AddScoped<ProveedorDomain>();
