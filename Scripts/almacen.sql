@@ -103,6 +103,7 @@ AS
 BEGIN
     INSERT INTO Proveedor (cNombre, cContacto, cTelefono, cEmail, cDireccion)
     VALUES (@cNombre, @cContacto, @cTelefono, @cEmail, @cDireccion);
+	select cast(SCOPE_IDENTITY() as int)
 END;
 
 CREATE PROCEDURE ActualizarProveedor
@@ -117,6 +118,7 @@ BEGIN
     UPDATE Proveedor
     SET cNombre = @cNombre, cContacto = @cContacto, cTelefono = @cTelefono, cEmail = @cEmail, cDireccion = @cDireccion
     WHERE nIdProveedor = @nIdProveedor;
+	select cast(@@ROWCOUNT as int)
 END;
 
 CREATE PROCEDURE EliminarProveedor
@@ -124,9 +126,10 @@ CREATE PROCEDURE EliminarProveedor
 AS
 BEGIN
     DELETE FROM Proveedor WHERE nIdProveedor = @nIdProveedor;
+	select cast(@@ROWCOUNT as int)
 END;
 
-CREATE PROCEDURE SeleccionarProveedores
+CREATE PROCEDURE SeleccionarProveedor
 AS
 BEGIN
     SELECT * FROM Proveedor;
@@ -177,6 +180,7 @@ AS
 BEGIN
     INSERT INTO Empleado (cNombre, cApellido, cPuesto, dFechaContrato, pSalario)
     VALUES (@cNombre, @cApellido, @cPuesto, @dFechaContrato, @pSalario);
+	select cast(SCOPE_IDENTITY() as int)
 END;
 
 CREATE PROCEDURE ActualizarEmpleado
@@ -191,6 +195,7 @@ BEGIN
     UPDATE Empleado
     SET cNombre = @cNombre, cApellido = @cApellido, cPuesto = @cPuesto, dFechaContrato = @dFechaContrato, pSalario = @pSalario
     WHERE nIdEmpleado = @nIdEmpleado;
+	select cast(@@ROWCOUNT as int)
 END;
 
 CREATE PROCEDURE EliminarEmpleado
@@ -198,6 +203,7 @@ CREATE PROCEDURE EliminarEmpleado
 AS
 BEGIN
     DELETE FROM Empleado WHERE nIdEmpleado = @nIdEmpleado;
+	select cast(@@ROWCOUNT as int)
 END;
 
 CREATE PROCEDURE SeleccionarEmpleados
