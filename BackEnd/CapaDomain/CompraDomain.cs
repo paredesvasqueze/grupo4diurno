@@ -39,12 +39,36 @@ namespace CapaDomain
             }
             
         }
-
-        public int ActualizararCompra(Compra oCompra)
+        public int ActualizarCompra(Compra oCompra)
         {
             try
             {
                 return _CompraRepository.InsertarCompra(oCompra);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public int EliminarCompra(Compra oCompra)
+        {
+            try
+            {
+                return _CompraRepository.InsertarCompra(oCompra);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+        public int SeleccionarCompra(Compra oCompra)
+        {
+            try
+            {
+                return _CompraRepository.SeleccionarCompra(oCompra);
             }
             catch (Exception)
             {

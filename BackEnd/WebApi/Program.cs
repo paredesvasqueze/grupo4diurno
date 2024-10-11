@@ -17,6 +17,8 @@ builder.Services.AddSingleton(provider =>
 //builder.Services.AddScoped<AlumnoRepository>();
 //builder.Services.AddScoped<AlumnoDomain>();
 
+builder.Services.AddScoped<ProductoRepository>();
+builder.Services.AddScoped<ProductoDomain>();
 
 builder.Services.AddScoped<DetallesOrdenCompraRepository>();
 builder.Services.AddScoped<DetallesOrdenCompraDomain>();
@@ -29,6 +31,9 @@ builder.Services.AddScoped<ProveedorDomain>();
 
 builder.Services.AddScoped<OrdenCompraRepository>();
 builder.Services.AddScoped<OrdenCompraDomain>();
+
+builder.Services.AddScoped<CompraRepository>();
+builder.Services.AddScoped<CompraDomain>();
 
 // Registrar los controladores
 builder.Services.AddControllers();
