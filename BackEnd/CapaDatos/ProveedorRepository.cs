@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<Proveedor> lstFound = new List<Proveedor>();
-                var query = "SeleccionarProveedor";
+                var query = "SeleccionarProveedores";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<Proveedor>(connection, query, param, commandType: CommandType.StoredProcedure);
@@ -65,7 +65,7 @@ namespace CapaDatos
 
                 var query = "ActualizarProveedor";
                 var param = new DynamicParameters();
-                param.Add("@nIdProveedor", cProveedor.nId_proveedor);
+                param.Add("@nIdProveedor", cProveedor.nIdProveedor);
                 param.Add("@cNombre", cProveedor.cNombre);
                 param.Add("@cContacto", cProveedor.cContacto);
                 param.Add("@cTelefono", cProveedor.cTelefono);
@@ -85,7 +85,7 @@ namespace CapaDatos
 
                 var query = "EliminarProveedor";
                 var param = new DynamicParameters();
-                param.Add("@nIdProveedor", cProveedor.nId_proveedor);
+                param.Add("@nIdProveedor", cProveedor.nIdProveedor);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
 

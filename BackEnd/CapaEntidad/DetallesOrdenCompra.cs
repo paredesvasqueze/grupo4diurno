@@ -6,7 +6,7 @@
         public int nIdOrdenCompra { get; set; }
         public int nIdProducto { get; set; }
         public int pCantidad { get; set; }
-        public double pPrecio { get; set; }
-
+        public decimal pPrecio { get; set; }
     }
+
 }

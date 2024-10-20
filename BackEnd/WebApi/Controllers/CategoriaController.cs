@@ -41,14 +41,6 @@ namespace WebApi.Controllers
             var id = _CategoriaDomain.EliminarCategoria(oCategoria);
             return Ok(id);
         }
-        [HttpPost("SeleccionarCategoria")]
-        public IActionResult SeleccionarCategoria(Categoria oCategoria)
-        {
-            var id = _CategoriaDomain.SeleccionarCategoria(oCategoria);
-            return Ok(id);
-        }
-
-
     }
 }
 

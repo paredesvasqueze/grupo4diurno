@@ -43,7 +43,7 @@ namespace CapaDomain
         {
             try
             {
-                return _CategoriaRepository.InsertarCategoria(oCategoria);
+                return _CategoriaRepository.ActualizarCategoria(oCategoria);
             }
             catch (Exception)
             {
@@ -53,18 +53,6 @@ namespace CapaDomain
         }
 
         public int EliminarCategoria(Categoria oCategoria)
-        {
-            try
-            {
-                return _CategoriaRepository.EliminarCategoria(oCategoria);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
-        public int SeleccionarCategoria(Categoria oCategoria)
         {
             try
             {

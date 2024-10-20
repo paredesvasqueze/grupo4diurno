@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<Compra> lstFound = new List<Compra>();
-                var query = "USP_GET_Compra_Todos";
+                var query = "SeleccionarCompras";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<Compra>(connection, query, param, commandType: CommandType.StoredProcedure);
@@ -45,7 +45,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 
-                var query = "USP_Insert_Compra_Todos";
+                var query = "InsertarCompra";
                 var param = new DynamicParameters();
                 param.Add("@dFecha", oCompra.dFecha);
                 param.Add("@pTotal", oCompra.pTotal);
@@ -62,7 +62,7 @@ namespace CapaDatos
             {
                 connection.Open();
 
-                var query = "USP_Actualizar_Compra_Todos";
+                var query = "ActualizarCompra";
                 var param = new DynamicParameters();
                 param.Add("@nIdCompra", oCompra.nIdCompra);
                 param.Add("@dFecha", oCompra.dFecha);
@@ -72,26 +72,13 @@ namespace CapaDatos
             }
         }
 
-        public int EliminararCompra(Compra oCompra)
+        public int EliminarCompra(Compra oCompra)
         {
             using (var connection = _conexionSingleton.GetConnection())
             {
                 connection.Open();
 
-                var query = "USP_Eliminar_Compra_Todos";
-                var param = new DynamicParameters();
-                param.Add("@nIdCompra", oCompra.nIdCompra);
-                return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
-            }
-        }
-
-        public int SeleccionarCompra(Compra oCompra)
-        {
-            using (var connection = _conexionSingleton.GetConnection())
-            {
-                connection.Open();
-
-                var query = "USP_Seleccionar_Compra_Todos";
+                var query = "EliminarCompra";
                 var param = new DynamicParameters();
                 param.Add("@nIdCompra", oCompra.nIdCompra);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);

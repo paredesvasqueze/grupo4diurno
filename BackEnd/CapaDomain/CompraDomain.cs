@@ -64,17 +64,5 @@ namespace CapaDomain
             }
 
         }
-        public int SeleccionarCompra(Compra oCompra)
-        {
-            try
-            {
-                return _CompraRepository.SeleccionarCompra(oCompra);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
     }
 }

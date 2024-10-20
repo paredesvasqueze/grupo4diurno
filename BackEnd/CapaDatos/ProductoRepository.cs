@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<Producto> lstFound = new List<Producto>();
-                var query = "USP_GET_Producto_Todos";
+                var query = "SeleccionarProductos";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<Producto>(connection, query, param, commandType: CommandType.StoredProcedure);

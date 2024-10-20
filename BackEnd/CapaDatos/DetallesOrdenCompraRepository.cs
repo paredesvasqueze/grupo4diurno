@@ -34,8 +34,7 @@ namespace CapaDatos
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<DetallesOrdenCompra>(connection, query, param, commandType: CommandType.StoredProcedure);
-                return lstFound;              
-                
+                return lstFound;
             }
         }
 
@@ -45,7 +44,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 
-                var query = "InsertarDetalleOrdenCompra";
+                var query = "InsertarDetallesOrdenCompra";
                 var param = new DynamicParameters();
                 param.Add("@nIdOrdenCompra", oDetallesOrdenCompra.nIdOrdenCompra);
                 param.Add("@nIdProducto", oDetallesOrdenCompra.nIdProducto);
@@ -63,14 +62,17 @@ namespace CapaDatos
 
                 var query = "ActualizarDetalleOrdenCompra";
                 var param = new DynamicParameters();
-                param.Add(" @nIdDetalle", oDetallesOrdenCompra.nIdDetalle);
-                param.Add(" @nIdOrdenCompra", oDetallesOrdenCompra.nIdOrdenCompra);
-                param.Add(" @nIdProducto ", oDetallesOrdenCompra.@nIdProducto);
-                param.Add(" @pCantidad ", oDetallesOrdenCompra.pCantidad);
-                param.Add(" @pPrecio", oDetallesOrdenCompra.pPrecio);
+                param.Add("@nIdDetalle", oDetallesOrdenCompra.nIdDetalle);
+                param.Add("@nIdOrdenCompra", oDetallesOrdenCompra.nIdOrdenCompra);
+                param.Add("@nIdProducto", oDetallesOrdenCompra.nIdProducto);
+                param.Add("@pCantidad", oDetallesOrdenCompra.pCantidad);
+                param.Add("@pPrecio", oDetallesOrdenCompra.pPrecio);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
         }
+
+
+
 
         public int EliminarDetalleOrdenCompra(DetallesOrdenCompra oDetallesOrdenCompra)
         {

@@ -32,14 +32,14 @@ namespace WebApi.Controllers
         [HttpPut("ActualizarDetallesOrdenCompra")]
         public IActionResult ActualizarDetalleDetallesOrdenCompra(DetallesOrdenCompra oDetallesOrdenCompra)
         {
-            var id = _DetallesOrdenCompraDomain.InsertarDetalleOrdenCompra(oDetallesOrdenCompra);
+            var id = _DetallesOrdenCompraDomain.ActualizarDetalleOrdenCompra(oDetallesOrdenCompra);
             return Ok(id);
         }
 
         [HttpDelete("EliminarDetallesOrdenCompra")]
         public IActionResult EliminarDetalleDetallesOrdenCompra(DetallesOrdenCompra oDetallesOrdenCompra)
         {
-            var id = _DetallesOrdenCompraDomain.InsertarDetalleOrdenCompra(oDetallesOrdenCompra);
+            var id = _DetallesOrdenCompraDomain.EliminarDetalleOrdenCompra(oDetallesOrdenCompra);
             return Ok(id);
         }
 

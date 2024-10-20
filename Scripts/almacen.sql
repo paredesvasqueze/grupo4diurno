@@ -93,7 +93,7 @@ CREATE TABLE Kardex (
 -- Procedimientos almacenados para las 9 tablas
 
 -- 1. Procedimientos para Proveedor
-CREATE PROCEDURE InsertarProveedor
+ALTER PROCEDURE InsertarProveedor
     @cNombre VARCHAR(100),
     @cContacto VARCHAR(50),
     @cTelefono VARCHAR(18),
@@ -105,8 +105,8 @@ BEGIN
     VALUES (@cNombre, @cContacto, @cTelefono, @cEmail, @cDireccion);
 	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarProveedor
+go
+ALTER PROCEDURE ActualizarProveedor
     @nIdProveedor INT,
     @cNombre VARCHAR(100),
     @cContacto VARCHAR(50),
@@ -120,32 +120,33 @@ BEGIN
     WHERE nIdProveedor = @nIdProveedor;
 	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE EliminarProveedor
+go
+ALTER PROCEDURE EliminarProveedor
     @nIdProveedor INT
 AS
 BEGIN
     DELETE FROM Proveedor WHERE nIdProveedor = @nIdProveedor;
 	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarProveedor
+go
+ALTER PROCEDURE SeleccionarProveedores
 AS
 BEGIN
     SELECT * FROM Proveedor;
 END;
-
+go
 -- 2. Procedimientos para Categoria
-CREATE PROCEDURE InsertarCategoria
+ALTER PROCEDURE InsertarCategoria
     @cNombre VARCHAR(100),
     @cDescripcion VARCHAR(100)
 AS
 BEGIN
     INSERT INTO Categoria (cNombre, cDescripcion)
     VALUES (@cNombre, @cDescripcion);
+	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarCategoria
+go
+ALTER PROCEDURE ActualizarCategoria
     @nIdCategoria INT,
     @cNombre VARCHAR(100),
     @cDescripcion VARCHAR(100)
@@ -154,23 +155,25 @@ BEGIN
     UPDATE Categoria
     SET cNombre = @cNombre, cDescripcion = @cDescripcion
     WHERE nIdCategoria = @nIdCategoria;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE EliminarCategoria
+go
+ALTER PROCEDURE EliminarCategoria
     @nIdCategoria INT
 AS
 BEGIN
     DELETE FROM Categoria WHERE nIdCategoria = @nIdCategoria;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarCategorias
+go
+ALTER PROCEDURE SeleccionarCategorias
 AS
 BEGIN
     SELECT * FROM Categoria;
 END;
-
+go
 -- 3. Procedimientos para Empleado
-CREATE PROCEDURE InsertarEmpleado
+ALTER PROCEDURE InsertarEmpleado
     @cNombre VARCHAR(50),
     @cApellido VARCHAR(50),
     @cPuesto VARCHAR(40),
@@ -182,8 +185,8 @@ BEGIN
     VALUES (@cNombre, @cApellido, @cPuesto, @dFechaContrato, @pSalario);
 	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarEmpleado
+go
+ALTER PROCEDURE ActualizarEmpleado
     @nIdEmpleado INT,
     @cNombre VARCHAR(50),
     @cApellido VARCHAR(50),
@@ -197,23 +200,23 @@ BEGIN
     WHERE nIdEmpleado = @nIdEmpleado;
 	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE EliminarEmpleado
+go
+ALTER PROCEDURE EliminarEmpleado
     @nIdEmpleado INT
 AS
 BEGIN
     DELETE FROM Empleado WHERE nIdEmpleado = @nIdEmpleado;
 	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarEmpleados
+go
+ALTER PROCEDURE SeleccionarEmpleados
 AS
 BEGIN
     SELECT * FROM Empleado;
 END;
-
+go
 -- 4. Procedimientos para Producto
-CREATE PROCEDURE InsertarProducto
+ALTER PROCEDURE InsertarProducto
     @nIdProveedor INT,
     @nIdCategoria INT,
     @cNombre VARCHAR(50),
@@ -223,9 +226,10 @@ AS
 BEGIN
     INSERT INTO Producto (nIdProveedor, nIdCategoria, cNombre, cDescripcion, pPrecio)
     VALUES (@nIdProveedor, @nIdCategoria, @cNombre, @cDescripcion, @pPrecio);
+	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarProducto
+go
+ALTER PROCEDURE ActualizarProducto
     @nIdProducto INT,
     @nIdProveedor INT,
     @nIdCategoria INT,
@@ -237,21 +241,23 @@ BEGIN
     UPDATE Producto
     SET nIdProveedor = @nIdProveedor, nIdCategoria = @nIdCategoria, cNombre = @cNombre, cDescripcion = @cDescripcion, pPrecio = @pPrecio
     WHERE nIdProducto = @nIdProducto;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE EliminarProducto
+go
+ALTER PROCEDURE EliminarProducto
     @nIdProducto INT
 AS
 BEGIN
     DELETE FROM Producto WHERE nIdProducto = @nIdProducto;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarProductos
+go
+ALTER PROCEDURE SeleccionarProductos
 AS
 BEGIN
     SELECT * FROM Producto;
 END;
-
+go
 -- 5. Procedimientos para OrdenCompra
 ALTER PROCEDURE InsertarOrdenCompra
     @nIdProveedor INT,
@@ -263,7 +269,7 @@ BEGIN
     VALUES (@nIdProveedor, @dFecha, @pTotal);
 	select cast(SCOPE_IDENTITY() as int)
 END;
-
+go
 ALTER PROCEDURE ActualizarOrdenCompra
     @nIdOrdenCompra INT,
     @nIdProveedor INT,
@@ -276,7 +282,7 @@ BEGIN
     WHERE nIdOrdenCompra = @nIdOrdenCompra;
 	select cast(@@ROWCOUNT as int)
 END;
-
+go
 ALTER PROCEDURE EliminarOrdenCompra
     @nIdOrdenCompra INT
 AS
@@ -284,15 +290,15 @@ BEGIN
     DELETE FROM OrdenCompra WHERE nIdOrdenCompra = @nIdOrdenCompra;
 	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarOrdenesCompra
+go
+ALTER PROCEDURE SeleccionarOrdenesCompra
 AS
 BEGIN
     SELECT * FROM OrdenCompra;
 END;
-
+go
 -- 6. Procedimientos para DetallesOrdenCompra
-CREATE PROCEDURE InsertarDetalleOrdenCompra
+CREATE PROCEDURE InsertarDetallesOrdenCompra
     @nIdOrdenCompra INT,
     @nIdProducto INT,
     @pCantidad INT,
@@ -301,9 +307,10 @@ AS
 BEGIN
     INSERT INTO DetallesOrdenCompra (nIdOrdenCompra, nIdProducto, pCantidad, pPrecio)
     VALUES (@nIdOrdenCompra, @nIdProducto, @pCantidad, @pPrecio);
+	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarDetalleOrdenCompra
+go
+ALTER PROCEDURE ActualizarDetalleOrdenCompra
     @nIdDetalle INT,
     @nIdOrdenCompra INT,
     @nIdProducto INT,
@@ -314,24 +321,26 @@ BEGIN
     UPDATE DetallesOrdenCompra
     SET nIdOrdenCompra = @nIdOrdenCompra, nIdProducto = @nIdProducto, pCantidad = @pCantidad, pPrecio = @pPrecio
     WHERE nIdDetalle = @nIdDetalle;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE EliminarDetalleOrdenCompra
+go
+ALTER PROCEDURE EliminarDetalleOrdenCompra
     @nIdDetalle INT
 AS
 BEGIN
     DELETE FROM DetallesOrdenCompra WHERE nIdDetalle = @nIdDetalle;
-END;
+	select cast(@@ROWCOUNT as int)
 
+END;
+go
 CREATE PROCEDURE SeleccionarDetallesOrdenCompra
-    @nIdOrdenCompra INT
 AS
 BEGIN
-    SELECT * FROM DetallesOrdenCompra WHERE nIdOrdenCompra = @nIdOrdenCompra;
+    SELECT * FROM DetallesOrdenCompra;
 END;
-
+go
 -- 7. Procedimientos para Compra
-CREATE PROCEDURE InsertarCompra
+ALTER PROCEDURE InsertarCompra
     @dFecha DATETIME,
     @pTotal DECIMAL(11,2),
     @nIdEmpleado INT
@@ -339,9 +348,10 @@ AS
 BEGIN
     INSERT INTO Compra (dFecha, pTotal, nIdEmpleado)
     VALUES (@dFecha, @pTotal, @nIdEmpleado);
+	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarCompra
+go
+ALTER PROCEDURE ActualizarCompra
     @nIdCompra INT,
     @dFecha DATETIME,
     @pTotal DECIMAL(11,2),
@@ -351,23 +361,25 @@ BEGIN
     UPDATE Compra
     SET dFecha = @dFecha, pTotal = @pTotal, nIdEmpleado = @nIdEmpleado
     WHERE nIdCompra = @nIdCompra;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE EliminarCompra
+go
+ALTER PROCEDURE EliminarCompra
     @nIdCompra INT
 AS
 BEGIN
     DELETE FROM Compra WHERE nIdCompra = @nIdCompra;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarCompras
+go
+ALTER PROCEDURE SeleccionarCompras
 AS
 BEGIN
     SELECT * FROM Compra;
 END;
-
+go
 -- 8. Procedimientos para Inventario
-CREATE PROCEDURE InsertarInventario
+ALTER PROCEDURE InsertarInventario
     @nIdProducto INT,
     @pCantidad INT,
     @dFechaActualizar DATETIME
@@ -375,9 +387,10 @@ AS
 BEGIN
     INSERT INTO Inventario (nIdProducto, pCantidad, dFechaActualizar)
     VALUES (@nIdProducto, @pCantidad, @dFechaActualizar);
+	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarInventario
+go
+ALTER  PROCEDURE ActualizarInventario
     @nIdInventario INT,
     @nIdProducto INT,
     @pCantidad INT,
@@ -387,23 +400,25 @@ BEGIN
     UPDATE Inventario
     SET nIdProducto = @nIdProducto, pCantidad = @pCantidad, dFechaActualizar = @dFechaActualizar
     WHERE nIdInventario = @nIdInventario;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE EliminarInventario
+go
+ALTER PROCEDURE EliminarInventario
     @nIdInventario INT
 AS
 BEGIN
     DELETE FROM Inventario WHERE nIdInventario = @nIdInventario;
+	select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarInventarios
+go
+ALTER PROCEDURE SeleccionarInventarios
 AS
 BEGIN
     SELECT * FROM Inventario;
 END;
-
+go
 -- 9. Procedimientos para Kardex
-CREATE PROCEDURE InsertarKardex
+ALTER  PROCEDURE InsertarKardex
     @nIdProducto INT,
     @nIdEmpleado INT,
     @cTipoMovimiento VARCHAR(50),
@@ -413,9 +428,10 @@ AS
 BEGIN
     INSERT INTO Kardex (nIdProducto, nIdEmpleado, dFecha, cTipoMovimiento, pCantidad)
     VALUES (@nIdProducto, @nIdEmpleado, @dFecha, @cTipoMovimiento, @pCantidad);
+	select cast(SCOPE_IDENTITY() as int)
 END;
-
-CREATE PROCEDURE ActualizarKardex
+go
+ALTER PROCEDURE ActualizarKardex
     @nIdKardex INT,
     @nIdProducto INT,
     @pMovimiento VARCHAR(50),
@@ -426,17 +442,21 @@ BEGIN
     UPDATE Kardex
     SET nIdProducto = @nIdProducto, @pMovimiento = @pMovimiento, pCantidad = @pCantidad, dFecha = @dFecha
     WHERE nIdKardex = @nIdKardex;
-END;
+	select cast(@@ROWCOUNT as int)
 
-CREATE PROCEDURE EliminarKardex
+END;
+go
+ALTER PROCEDURE EliminarKardex
     @nIdKardex INT
 AS
 BEGIN
     DELETE FROM Kardex WHERE nIdKardex = @nIdKardex;
+	Select cast(@@ROWCOUNT as int)
 END;
-
-CREATE PROCEDURE SeleccionarKardex
+go
+ALTER PROCEDURE SeleccionarKardex
 AS
 BEGIN
     SELECT * FROM Kardex;
 END;
+go

@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<Empleado> lstFound = new List<Empleado>();
-                var query = "SeleccionarEmpleado";
+                var query = "SeleccionarEmpleados";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<Empleado>(connection, query, param, commandType: CommandType.StoredProcedure);

@@ -41,14 +41,6 @@ namespace WebApi.Controllers
             var id = _CompraDomain.EliminarCompra(oCompra);
             return Ok(id);
         }
-        [HttpPost("SeleccionarCompra")]
-        public IActionResult SeleccionarCompra(Compra oCompra)
-        {
-            var id = _CompraDomain.SeleccionarCompra(oCompra);
-            return Ok(id);
-        }
-
-
     }
 }
 
