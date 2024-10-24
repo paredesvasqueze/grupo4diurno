@@ -15,7 +15,7 @@ namespace WebApi.Controllers
             _ProveedorDomain = ProveedorDomain;
         }
 
-        [HttpGet("ObtenerProveedorTodos(")]
+        [HttpGet("ObtenerProveedorTodos")]
         public IActionResult ObtenerProveedorTodos()
         {
             var Proveedors = _ProveedorDomain.ObtenerProveedorTodos();
