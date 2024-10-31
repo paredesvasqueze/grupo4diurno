@@ -1,0 +1,28 @@
+CREATE DATABASE ex;
+USE ex;
+CREATE TABLE usser
+(
+	nIdUsuario INT IDENTITY PRIMARY KEY,
+	cUserName VARCHAR(50),
+	cPassword VARCHAR(256)
+)
+GO
+CREATE PROCEDURE ValidarUsuario
+	@cUserName VARCHAR(50),
+	@cPassword VARCHAR(256)
+	AS
+	BEGIN
+		IF exists(SELECT * FROM usser WHERE cUserName = @cUserName
+		and cPassword = @cPassword)
+	BEGIN
+		SELECT cast(1 AS BIT)
+		END
+	ELSE
+		BEGIN
+		SELECT cast(0 AS BIT)
+		END
+	END
+
+
+	INSERT INTO usser (cUserName, cPassword) VALUES ('Pedro', '1C9B2CCB3AF0456F898A1D0B66F80721B34E0A3514BF21A44BE250EB5213492C')
+	SELECT * FROM usser
