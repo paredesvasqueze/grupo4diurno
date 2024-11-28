@@ -43,7 +43,7 @@ namespace CapaDomain
         {
             try
             {
-                return _ProveedorRepository.InsertarProveedor(oProveedor);
+                return _ProveedorRepository.ActualizarProveedor(oProveedor);
             }
             catch (Exception)
             {

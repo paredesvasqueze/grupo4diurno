@@ -1,0 +1,197 @@
+﻿@model IEnumerable<FrontEnd.Models.Empleado>
+@{
+    ViewData["Title"] = "Listado de Empleados";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<h2>Listado de Empleados</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Empleado</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Puesto</th>
+            <th>Fecha de Contrato</th>
+            <th>Salario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var empleado in Model)
+        {
+            <tr>
+                <td>@empleado.nIdEmpleado</td>
+                <td>@empleado.cNombre</td>
+                <td>@empleado.cApellido</td>
+                <td>@empleado.cPuesto</td>
+                <td>@empleado.dFechaContrato.ToString("yyyy-MM-dd")</td>
+                <td>@empleado.pSalario.ToString("C")</td>
+                <td>
+                    <button class="btn btn-warning" onclick="openEditModal(@empleado.nIdEmpleado, '@empleado.cNombre', '@empleado.cApellido', '@empleado.cPuesto', '@empleado.dFechaContrato.ToString("yyyy-MM-dd")', @empleado.pSalario)">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteEmpleado(@empleado.nIdEmpleado)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="openModal()">Nuevo</button>
+
+<!-- Modal para Nuevo Empleado -->
+<div class="modal fade" id="newEmpleadoModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nuevo Empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newEmpleadoForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="cNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="cApellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="puesto">Puesto</label>
+                        <input type="text" class="form-control" id="puesto" name="cPuesto">
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaContrato">Fecha de Contrato</label>
+                        <input type="date" class="form-control" id="fechaContrato" name="dFechaContrato" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="salario">Salario</label>
+                        <input type="number" class="form-control" id="salario" name="pSalario" step="0.01">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEmpleado()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Empleado -->
+<div class="modal fade" id="editEmpleadoModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Editar Empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editEmpleadoForm">
+                <input type="hidden" id="editId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editNombre">Nombre</label>
+                        <input type="text" class="form-control" id="editNombre" name="cNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editApellido">Apellido</label>
+                        <input type="text" class="form-control" id="editApellido" name="cApellido">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPuesto">Puesto</label>
+                        <input type="text" class="form-control" id="editPuesto" name="cPuesto">
+                    </div>
+                    <div class="form-group">
+                        <label for="editFechaContrato">Fecha de Contrato</label>
+                        <input type="date" class="form-control" id="editFechaContrato" name="dFechaContrato" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSalario">Salario</label>
+                        <input type="number" class="form-control" id="editSalario" name="pSalario" step="0.01">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditEmpleado()">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal() {
+            $('#newEmpleadoModal').modal('show');
+        }
+
+        function openEditModal(id, nombre, apellido, puesto, fechaContrato, salario) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editNombre').value = nombre;
+            document.getElementById('editApellido').value = apellido;
+            document.getElementById('editPuesto').value = puesto;
+            document.getElementById('editFechaContrato').value = fechaContrato;
+            document.getElementById('editSalario').value = salario;
+            $('#editEmpleadoModal').modal('show');
+        }
+
+        function submitEmpleado() {
+            const data = {
+                cNombre: document.getElementById('nombre').value,
+                cApellido: document.getElementById('apellido').value,
+                cPuesto: document.getElementById('puesto').value,
+                dFechaContrato: document.getElementById('fechaContrato').value,
+                pSalario: parseFloat(document.getElementById('salario').value)
+            };
+
+            fetch('/Empleado', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) location.reload();
+                else alert('Error al crear Empleado.');
+            });
+        }
+
+        function submitEditEmpleado() {
+            const data = {
+                nIdEmpleado: document.getElementById('editId').value,
+                cNombre: document.getElementById('editNombre').value,
+                cApellido: document.getElementById('editApellido').value,
+                cPuesto: document.getElementById('editPuesto').value,
+                dFechaContrato: document.getElementById('editFechaContrato').value,
+                pSalario: parseFloat(document.getElementById('editSalario').value)
+            };
+
+            fetch('/Empleado', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) location.reload();
+                else alert('Error al actualizar Empleado.');
+            });
+        }
+
+        function deleteEmpleado(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
+                fetch(`/Empleado/${id}`, {
+                    method: 'DELETE'
+                }).then(response => {
+                    if (response.ok) location.reload();
+                    else alert('Error al eliminar Empleado.');
+                });
+            }
+        }
+    </script>
+}

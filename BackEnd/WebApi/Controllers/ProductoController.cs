@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ProductoController : ControllerBase
@@ -22,9 +24,17 @@ namespace WebApi.Controllers
             return Ok(ordenesCompra);
         }
 
+        [HttpGet("GetProductoId/{nIdProducto}")]
+        public IActionResult GetProductoId(int nIdProducto)
+        {
+            var ordenesCompra = _ProductoDomain.GetProductoId(nIdProducto);
+            return Ok(ordenesCompra);
+        }
+
         [HttpPost("InsertarProducto")]
         public IActionResult InsertarProducto(Producto oProducto)
         {
+            oProducto.nIdProveedor = 1;
             var id = _ProductoDomain.InsertarProducto(oProducto);
             return Ok(id);
         }
@@ -32,13 +42,15 @@ namespace WebApi.Controllers
         [HttpPut("ActualizarProducto")]
         public IActionResult ActualizarProducto(Producto oProducto)
         {
-            var resultado = _ProductoDomain.InsertarProducto(oProducto);
+            oProducto.nIdProveedor = 1;
+            var resultado = _ProductoDomain.ActualizarProducto(oProducto);
             return Ok(resultado);
         }
 
-        [HttpDelete("EliminarProducto")]
-        public IActionResult EliminarProducto(Producto oProducto)
+        [HttpDelete("EliminarProducto/{nIdProducto}")]
+        public IActionResult EliminarProducto(int nIdProducto)
         {
+            Producto oProducto = new Producto() { nIdProducto = nIdProducto };
             var id = _ProductoDomain.EliminarProducto(oProducto);
             return Ok(id);
         }

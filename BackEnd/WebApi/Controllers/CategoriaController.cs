@@ -36,10 +36,12 @@ namespace WebApi.Controllers
             var id = _CategoriaDomain.ActualizarCategoria(oCategoria);
             return Ok(id);
         }
-        [HttpDelete("EliminarCategoria")]
-        public IActionResult EliminarCategoria(Categoria oCategoria)
+
+        [HttpDelete("EliminarCategoria/{nIdCategoria}")]
+        public IActionResult EliminarCategoria(Int32 nIdCategoria)
         {
-            var id = _CategoriaDomain.EliminarCategoria(oCategoria);
+            Categoria categoria = new Categoria() { nIdCategoria = nIdCategoria };
+            var id = _CategoriaDomain.EliminarCategoria(categoria);
             return Ok(id);
         }
     }

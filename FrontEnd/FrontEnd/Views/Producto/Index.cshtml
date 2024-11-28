@@ -1,0 +1,173 @@
+﻿@model IEnumerable<Producto>
+@{
+    ViewData["Title"] = "Productos";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+
+<h2>Listado de Productos</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Producto</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nIdProducto</td>
+                <td>@item.cNombre</td>
+                <td>@item.cDescripcion</td>
+                <td>@item.pPrecio</td>
+                <td>@item.cNombreCategoria</td>
+                <td>@item.cNombreProveedor</td>
+                <td>
+                    <button class="btn btn-primary" onclick="openEditModal(@item.nIdProducto)">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteProducto(@item.nIdProducto)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-success" onclick="openCreateModal()">Nuevo Producto</button>
+
+<!-- Modal para Crear/Editar Producto -->
+<div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="productoForm">
+                <div class="modal-body">
+                    <input type="hidden" id="nIdProducto" name="nIdProducto" />
+                    <div class="form-group">
+                        <label for="cNombre">Nombre</label>
+                        <input type="text" class="form-control" id="cNombre" name="cNombre" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="cDescripcion">Descripción</label>
+                        <input type="text" class="form-control" id="cDescripcion" name="cDescripcion" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="pPrecio">Precio</label>
+                        <input type="number" class="form-control" id="pPrecio" name="pPrecio" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="nIdCategoria">Categoría</label>
+                        <select id="nIdCategoria" name="nIdCategoria" class="form-control" required>
+                            <option value="">Seleccione una categoría</option>
+                            @foreach (var categoria in ViewBag.Categorias as IEnumerable<Categoria>)
+                            {
+                                <option value="@categoria.nIdCategoria">@categoria.cNombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nIdProveedor">Proveedor</label>
+                        <select id="nIdProveedor" name="nIdProveedor" class="form-control" required>
+                            <option value="">Seleccione un Proveedor</option>
+                            @foreach (var proveedor in ViewBag.Proveedor as IEnumerable<Proveedor>)
+                            {
+                                <option value="@proveedor.nIdProveedor">@proveedor.cNombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitProducto()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openCreateModal() {
+            // Limpiar formulario para crear un nuevo producto
+            document.getElementById('productoForm').reset();
+            $('#productoModal').modal('show');
+        }
+
+        function openEditModal(id) {
+            // Obtener los datos del producto con el ID proporcionado
+            fetch(`/Producto/GetProductoById/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Rellenar el formulario del modal con los datos recibidos
+                    document.getElementById('nIdProducto').value = data.nIdProducto;
+                    document.getElementById('cNombre').value = data.cNombre;
+                    document.getElementById('cDescripcion').value = data.cDescripcion;
+                    document.getElementById('pPrecio').value = data.pPrecio;
+                    document.getElementById('nIdCategoria').value = data.nIdCategoria;
+                    document.getElementById('nIdProveedor').value = data.nIdProveedor
+
+                    // Mostrar el modal de edición
+                    $('#productoModal').modal('show');
+                })
+                .catch(error => console.error('Error al obtener los datos del producto:', error));
+        }
+
+        function submitProducto() {
+            const producto = {
+                nIdProducto: document.getElementById('nIdProducto').value || 0,
+                cNombre: document.getElementById('cNombre').value,
+                cDescripcion: document.getElementById('cDescripcion').value,
+                pPrecio: parseFloat(document.getElementById('pPrecio').value),
+                nIdCategoria: parseInt(document.getElementById('nIdCategoria').value),
+                nIdProveedor: parseInt(document.getElementById('nIdProveedor').value)
+            };
+
+            //const url = producto.nIdProducto === 0 ? '/Producto' : `/Producto/Update/${producto.nIdProducto}`;
+            const url = '/Producto';
+            const method = producto.nIdProducto === 0 ? 'POST' : 'PUT';
+
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(producto)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        $('#productoModal').modal('hide'); // Cerrar el modal al guardar
+                        location.reload(); 
+                    } else {
+                        alert('Error al guardar el producto.');
+                    }
+                })
+                .catch(error => console.error('Error al enviar los datos del producto:', error));
+        }
+
+        function deleteProducto(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                fetch(`/Producto/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload(); 
+                        } else {
+                            alert('Error al eliminar el producto.');
+                        }
+                    })
+                    .catch(error => console.error('Error al eliminar el producto:', error));
+            }
+        }
+    </script>
+}

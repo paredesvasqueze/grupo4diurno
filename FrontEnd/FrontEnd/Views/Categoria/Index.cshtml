@@ -1,0 +1,174 @@
+﻿@model IEnumerable<Categoria>
+@{
+    ViewData["Title"] = "Listado de Categorías";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<h2>Listado de Categorías</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Categoría</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nIdCategoria</td>
+                <td>@item.cNombre</td>
+                <td>@item.cDescripcion</td>
+                <td>
+                <td>
+                    <button class="btn btn-warning" onclick="openEditModal(@item.nIdCategoria, '@item.cNombre', '@item.cDescripcion')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteCategory(@item.nIdCategoria)">Eliminar</button>
+                </td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="openModal()">Nuevo</button>
+
+<!-- Modal -->
+<div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nueva Categoría</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newCategoryForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="cNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" name="cDescripcion" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitCategory()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal para Editar Categoría -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Editar Categoría</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editCategoryForm">
+                <input type="hidden" id="editId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editNombre">Nombre</label>
+                        <input type="text" class="form-control" id="editNombre" name="cNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescripcion">Descripción</label>
+                        <input type="text" class="form-control" id="editDescripcion" name="cDescripcion" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditCategory()">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal() {
+            $('#newCategoryModal').modal('show');
+        }
+
+        function openEditModal(id, nombre, descripcion) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editNombre').value = nombre;
+            document.getElementById('editDescripcion').value = descripcion;
+            $('#editCategoryModal').modal('show');
+        }
+
+        function submitCategory() {
+            const data = {
+                cNombre: document.getElementById('nombre').value,
+                cDescripcion: document.getElementById('descripcion').value
+            };
+
+            fetch('/Categoria', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al crear la categoría.');
+                    }
+                });
+        }
+
+        function submitEditCategory() {
+            const data = {
+                nIdCategoria: document.getElementById('editId').value,
+                cNombre: document.getElementById('editNombre').value,
+                cDescripcion: document.getElementById('editDescripcion').value
+            };
+
+            fetch('/Categoria', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al actualizar la categoría.');
+                    }
+                });
+        }
+
+        function deleteCategory(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar esta categoría?")) {
+                fetch(`/Categoria/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Error al eliminar la categoría.');
+                        }
+                    });
+            }
+        }
+    </script>
+}

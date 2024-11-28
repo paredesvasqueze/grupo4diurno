@@ -27,6 +27,20 @@ namespace CapaDomain
            
         }
 
+        public Producto GetProductoId(int nIdProducto)
+        {
+            try
+            {
+                return _ProductoRepository.GetProductoId(nIdProducto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
         public int InsertarProducto(Producto oProducto)
         {
             try
@@ -40,11 +54,11 @@ namespace CapaDomain
             
         }
 
-        public int ActualizararProducto(Producto oProducto)
+        public int ActualizarProducto(Producto oProducto)
         {
             try
             {
-                return _ProductoRepository.InsertarProducto(oProducto);
+                return _ProductoRepository.ActualizarProducto(oProducto);
             }
             catch (Exception)
             {

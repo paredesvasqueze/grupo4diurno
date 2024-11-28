@@ -43,7 +43,7 @@ namespace CapaDomain
         {
             try
             {
-                return _CompraRepository.InsertarCompra(oCompra);
+                return _CompraRepository.ActualizarCompra(oCompra);
             }
             catch (Exception)
             {
@@ -56,7 +56,7 @@ namespace CapaDomain
         {
             try
             {
-                return _CompraRepository.InsertarCompra(oCompra);
+                return _CompraRepository.EliminarCompra(oCompra);
             }
             catch (Exception)
             {

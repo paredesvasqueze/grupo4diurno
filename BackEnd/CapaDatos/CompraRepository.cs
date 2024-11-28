@@ -24,7 +24,7 @@ namespace CapaDatos
         // Método para obtener una lista de Compras
         public IEnumerable<Compra> ObtenerCompraTodos()
         {
-            var Compras = new List<Compra>();
+            var Compra = new List<Compra>();
 
             using (var connection = _conexionSingleton.GetConnection())
             {
