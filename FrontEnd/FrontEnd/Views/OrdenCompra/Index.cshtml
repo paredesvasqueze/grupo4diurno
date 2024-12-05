@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<OrdenCompra>
 @{
-    ViewData["Title"] = "Ordenes De Compras";
+    ViewData["Title"] = "Órdenes de Compra";
     Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
 
-<h2>Listado de las Ordenes De Compras</h2>
+<h2>Listado de Órdenes de Compra</h2>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID Orden Compra</th>
-            <th>Nombre Del Proveedor</th>
+            <th>ID Orden</th>
+            <th>Proveedor</th>
             <th>Fecha</th>
             <th>Total</th>
             <th>Acciones</th>
@@ -19,42 +19,42 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.nIdOrdenCompra</td>
-                <td>@item.cNombreProveedor</td>
-                <td>@item.dFecha.ToString()</td>
-                <td>@item.pTotal</td>
-                <td>
-                    <button class="btn btn-primary" onclick="openEditModal(@item.nIdOrdenCompra)">Editar</button>
-                    <button class="btn btn-danger" onclick="deleteCompra(@item.nIdOrdenCompra)">Eliminar</button>
-                </td>
-            </tr>
+                <tr>
+                    <td>@item.nIdOrdenCompra</td>
+                    <td>@item.cNombreProveedor</td>
+                    <td>@item.dFecha?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.pTotal</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="openEditModal(@item.nIdOrdenCompra)">Editar</button>
+                        <button class="btn btn-danger" onclick="deleteOrdenCompra(@item.nIdOrdenCompra)">Eliminar</button>
+                    </td>
+                </tr>
         }
     </tbody>
 </table>
 
-<button class="btn btn-success" onclick="openCreateModal()">Nueva Orden De Compra</button>
+<button class="btn btn-success" onclick="openCreateModal()">Nueva Orden</button>
 
-<!-- Modal para Crear/Editar Compra -->
-<div class="modal fade" id="compraModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+<!-- Modal para Crear/Editar Orden -->
+<div class="modal fade" id="ordenCompraModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Orden De Compra</h5>
+                <h5 class="modal-title" id="modalTitle">Orden de Compra</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="compraForm">
+            <form id="ordenCompraForm">
                 <div class="modal-body">
                     <input type="hidden" id="nIdOrdenCompra" name="nIdOrdenCompra" />
                     <div class="form-group">
-                        <label for="cNombreProveedor">Nombre Del Proveedor</label>
-                        <select id="cNombreProveedor" name="cNombreProveedor" class="form-control" required>
+                        <label for="nIdProveedor">Proveedor</label>
+                        <select id="nIdProveedor" name="nIdProveedor" class="form-control" required>
                             <option value="">Seleccione un Proveedor</option>
-                            @foreach (var proveedor in ViewBag.Proveedor as IEnumerable<Proveedor>)
+                            @foreach (var proveedor in ViewBag.proveedor as IEnumerable<Proveedor>)
                             {
-                                <option value="@proveedor.nIdProveedor">@proveedor.cNombre</option>
+                                    <option value="@proveedor.nIdProveedor">@proveedor.cNombre</option>
                             }
                         </select>
                     </div>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="submitCompra()">Guardar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitOrdenCompra()">Guardar</button>
                 </div>
             </form>
         </div>
@@ -77,72 +77,73 @@
 </div>
 
 @section Scripts {
-    <script>
-        function openCreateModal() {
-            // Limpia el formulario antes de crear una nueva compra
-            document.getElementById('compraForm').reset();
-            $('#compraModal').modal('show');
-        }
+        <script>
+            function openCreateModal() {
+                // Limpiar formulario para crear una nueva orden
+                document.getElementById('ordenCompraForm').reset();
+                $('#ordenCompraModal').modal('show');
+            }
 
-        function openEditModal(id) {
-            // Obtiene los datos de la compra según el ID
-            fetch(`/Compra/GetCompraById/${id}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Rellena los datos en el formulario del modal
-                    document.getElementById('nIdCompra').value = data.nIdCompra;
-                    document.getElementById('nIdEmpleado').value = data.nIdEmpleado;
-                    document.getElementById('dFecha').value = new Date(data.dFecha).toISOString().split('T')[0];
-                    document.getElementById('pTotal').value = data.pTotal;
+            function openEditModal(id) {
+                // Obtener los datos de la orden con el ID proporcionado
+                fetch(`/OrdenCompra/GetOrdenComprasById/${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Rellenar el formulario del modal con los datos recibidos
+                        document.getElementById('nIdOrdenCompra').value = data.nIdOrdenCompra;
+                        document.getElementById('nIdProveedor').value = data.nIdProveedor;
+                        document.getElementById('dFecha').value = data.dFecha ? new Date(data.dFecha).toISOString().split('T')[0] : '';
+                        document.getElementById('pTotal').value = data.pTotal;
 
-                    // Abre el modal
-                    $('#compraModal').modal('show');
+                        // Mostrar el modal de edición
+                        $('#ordenCompraModal').modal('show');
+                    })
+                    .catch(error => console.error('Error al obtener los datos de la orden:', error));
+            }
+
+            function submitOrdenCompra() {
+                const ordenCompra = {
+                    nIdOrdenCompra: document.getElementById('nIdOrdenCompra').value || 0,
+                    nIdProveedor: parseInt(document.getElementById('nIdProveedor').value),
+                    dFecha: document.getElementById('dFecha').value,
+                    pTotal: parseFloat(document.getElementById('pTotal').value)
+                };
+
+                const url = '/OrdenCompra';
+                const method = ordenCompra.nIdOrdenCompra === 0 ? 'POST' : 'PUT';
+
+                fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(ordenCompra)
                 })
-                .catch(error => console.error('Error al obtener los datos de la compra:', error));
-        }
-
-        function submitCompra() {
-            const compra = {
-                nIdCompra: parseInt(document.getElementById('nIdCompra').value || 0),
-                nIdEmpleado: parseInt(document.getElementById('nIdEmpleado').value),
-                dFecha: document.getElementById('dFecha').value,
-                pTotal: parseFloat(document.getElementById('pTotal').value)
-            };
-
-            //const url = compra.nIdCompra === 0 ? '/Compra' : `/Compra/Update/${compra.nIdCompra}`;
-            const url = '/Compra';
-            const method = compra.nIdCompra === 0 ? 'POST' : 'PUT';
-
-            fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(compra)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        $('#compraModal').modal('hide'); 
-                        location.reload(); 
-                    } else {
-                        alert('Error al guardar la compra.');
-                    }
-                })
-                .catch(error => console.error('Error al enviar los datos de la compra:', error));
-        }
-
-        function deleteCompra(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar esta compra?')) {
-                fetch(`/Compra/Delete/${id}`, { method: 'DELETE' })
                     .then(response => {
                         if (response.ok) {
+                            $('#ordenCompraModal').modal('hide'); // Cerrar el modal al guardar
                             location.reload();
                         } else {
-                            alert('Error al eliminar la compra.');
+                            alert('Error al guardar la orden de compra.');
                         }
                     })
-                    .catch(error => console.error('Error al eliminar la compra:', error));
+                    .catch(error => console.error('Error al enviar los datos de la orden:', error));
             }
-        }
-    </script>
+
+            function deleteOrdenCompra(id) {
+                if (confirm('¿Estás seguro de que deseas eliminar esta orden de compra?')) {
+                    fetch(`/OrdenCompra/${id}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                location.reload();
+                            } else {
+                                alert('Error al eliminar la orden de compra.');
+                            }
+                        })
+                        .catch(error => console.error('Error al eliminar la orden de compra:', error));
+                }
+            }
+        </script>
 }

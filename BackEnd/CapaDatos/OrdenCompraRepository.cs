@@ -57,8 +57,6 @@ namespace CapaDatos
             }
         }
 
-
-
         public int ActualizarOrdenCompra(OrdenCompra oOrdenCompra)
         {
             using (var connection = _conexionSingleton.GetConnection())

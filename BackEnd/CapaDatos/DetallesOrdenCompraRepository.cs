@@ -44,7 +44,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 
-                var query = "InsertarDetallesOrdenCompra";
+                var query = "InsertarDetalleOrdenCompra";
                 var param = new DynamicParameters();
                 param.Add("@nIdOrdenCompra", oDetallesOrdenCompra.nIdOrdenCompra);
                 param.Add("@nIdProducto", oDetallesOrdenCompra.nIdProducto);

@@ -20,7 +20,7 @@ namespace FrontEnd.Servicio
         public async Task<IEnumerable<OrdenCompra>> GetOrdenComprasAsync(string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            var response = await _httpClient.GetAsync("/DetallesOrdenCompra/ObtenerDetallesOrdenCompraTodos");
+            var response = await _httpClient.GetAsync("/OrdenCompra/SeleccionarOrdenesCompra");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IEnumerable<OrdenCompra>>();
         }        
@@ -28,21 +28,21 @@ namespace FrontEnd.Servicio
         public async Task<bool> CreateOrdenCompraAsync(OrdenCompra OrdenCompra, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            var response = await _httpClient.PostAsJsonAsync("/DetallesOrdenCompra/InsertarDetallesOrdenCompra", OrdenCompra);
+            var response = await _httpClient.PostAsJsonAsync("/OrdenCompra/InsertarOrdenCompra", OrdenCompra);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> UpdateOrdenCompraAsync(OrdenCompra OrdenCompra, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            var response = await _httpClient.PutAsJsonAsync($"/DetallesOrdenCompra/ActualizarDetallesOrdenCompra", OrdenCompra);
+            var response = await _httpClient.PutAsJsonAsync($"/OrdenCompra/ActualizarOrdenCompra", OrdenCompra);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> DeleteOrdenCompraAsync(int id, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            var response = await _httpClient.DeleteAsync($"/DetallesOrdenCompra/EliminarDetallesOrdenCompra/{id}");
+            var response = await _httpClient.DeleteAsync($"/OrdenCompra/EliminarOrdenCompra/{id}");
             return response.IsSuccessStatusCode;
         }
 

@@ -22,6 +22,7 @@ namespace WebApi.Controllers
             return Ok(ordenesCompra);
         }
 
+
         [HttpPost("InsertarOrdenCompra")]
         public IActionResult InsertarOrdenCompra(OrdenCompra oOrdenCompra)
         {
@@ -36,11 +37,12 @@ namespace WebApi.Controllers
             return Ok(resultado);
         }
 
-        [HttpDelete("EliminarOrdenCompra")]
-        public IActionResult EliminarOrdenCompra(int id)
+        [HttpDelete("EliminarOrdenCompra/{nIdOrdenCompra}")]
+        public IActionResult EliminarOrdenCompra(int nIdOrdenCompra)
         {
-            var resultado = _ordenCompraDomain.EliminarOrdenCompra(id);
-            return Ok(resultado);
+            OrdenCompra oOrdenCompra = new OrdenCompra() { nIdOrdenCompra = nIdOrdenCompra };
+            var id = _ordenCompraDomain.EliminarOrdenCompra(nIdOrdenCompra);
+            return Ok(id);
         }
     }
 }
