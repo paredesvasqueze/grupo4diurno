@@ -47,7 +47,7 @@ namespace FrontEnd.Controllers
                     HttpOnly = true,       // Mayor seguridad
                     Secure = true,         // Solo para HTTPS en producción
                     SameSite = SameSiteMode.Strict, // Protección contra CSRF
-                    Expires = DateTime.Now.AddMinutes(5) // La cookie expira en 20 minutos
+                    Expires = DateTime.Now.AddMinutes(30) // La cookie expira en 20 minutos
                 };
 
                 // Agregar la cookie con el token y las opciones configuradas

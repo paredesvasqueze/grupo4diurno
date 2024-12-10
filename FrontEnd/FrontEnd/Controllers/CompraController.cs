@@ -33,6 +33,15 @@ namespace FrontEnd.Controllers
             return View(Compra);
         }
 
+        [HttpGet("GetCompraById/{nIdCompra}")]
+        public async Task<IActionResult> GetCompraId(Int32 nIdCompra)
+        {
+            _token = HttpContext.Request.Cookies["AuthToken"];
+            var oCompra = await _CompraService.GetCompraIdAsync(nIdCompra, _token);
+            return Ok(oCompra);
+            //return View(productos);
+        }
+
         [HttpPost()]
         public async Task<IActionResult> Create([FromBody] Compra Compra)
         {

@@ -22,6 +22,12 @@ namespace WebApi.Controllers
             return Ok(ordenesCompra);
         }
 
+        [HttpGet("GetOrdenCompraId/{nIdOrdenCompra}")]
+        public IActionResult GetOrdenCompraId(int nIdOrdenCompra)
+        {
+            var ordenesCompra = _ordenCompraDomain.GetOrdenCompraId(nIdOrdenCompra);
+            return Ok(ordenesCompra);
+        }
 
         [HttpPost("InsertarOrdenCompra")]
         public IActionResult InsertarOrdenCompra(OrdenCompra oOrdenCompra)

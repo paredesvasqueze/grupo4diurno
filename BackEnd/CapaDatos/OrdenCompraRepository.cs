@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<OrdenCompra> lstFound = new List<OrdenCompra>();
-                var query = "SeleccionarOrdenesCompra";
+                var query = "SeleccionarOrdenCompra";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<OrdenCompra>(connection, query, param, commandType: CommandType.StoredProcedure);
@@ -39,7 +39,23 @@ namespace CapaDatos
             }
         }
 
+        public OrdenCompra GetOrdenCompraId(int nIdOrdenCompra)
+        {
+            var OrdenCompra = new List<OrdenCompra>();
 
+            using (var connection = _conexionSingleton.GetConnection())
+            {
+                connection.Open();
+                OrdenCompra Item = new OrdenCompra();
+                var query = "GetOrdenCompraById";
+                var param = new DynamicParameters();
+                param.Add("@nIdOrdenCompra", nIdOrdenCompra);
+                //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
+                Item = SqlMapper.QueryFirstOrDefault<OrdenCompra>(connection, query, param, commandType: CommandType.StoredProcedure);
+                return Item;
+
+            }
+        }
 
         public int InsertarOrdenCompra(OrdenCompra oOrdenCompra)
         {

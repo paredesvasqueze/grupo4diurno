@@ -32,6 +32,14 @@ namespace FrontEnd.Servicio
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<OrdenCompra> GetOrdenCompraAsync(Int32 nIdOrdenCompra, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.GetAsync($"OrdenCompra/GetOrdenCompraId/{nIdOrdenCompra}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<OrdenCompra>();
+        }
+
         public async Task<bool> UpdateOrdenCompraAsync(OrdenCompra OrdenCompra, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);

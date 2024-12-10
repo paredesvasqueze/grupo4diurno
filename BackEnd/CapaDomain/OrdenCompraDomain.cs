@@ -26,6 +26,20 @@ namespace CapaDomain
             }
         }
 
+        public OrdenCompra GetOrdenCompraId(int nIdOrdenCompra)
+        {
+            try
+            {
+                return _ordenCompraRepository.GetOrdenCompraId(nIdOrdenCompra);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
         public int InsertarOrdenCompra(OrdenCompra ordenCompra)
         {
             try

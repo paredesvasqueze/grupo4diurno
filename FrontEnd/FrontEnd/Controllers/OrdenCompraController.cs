@@ -23,6 +23,15 @@ namespace FrontEnd.Controllers
             //_token = context.HttpContext.Request.Cookies["AuthToken"];
         }
 
+        [HttpGet("GetOrdenCompraById/{nIdOrdenCompra}")]
+        public async Task<IActionResult> GetOrdenCompraById(Int32 nIdOrdenCompra)
+        {
+            _token = HttpContext.Request.Cookies["AuthToken"];
+            var oOrdenCompra = await _OrdenCompraService.GetOrdenCompraAsync(nIdOrdenCompra, _token);
+            return Ok(oOrdenCompra);
+            //return View(productos);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {

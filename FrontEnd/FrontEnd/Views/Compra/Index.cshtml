@@ -86,7 +86,7 @@
 
         function openEditModal(id) {
             // Obtiene los datos de la compra según el ID
-            fetch(`Compra/GetCompraById/${id}`)
+            fetch(`/Compra/GetCompraById/${id}`)
                 .then(response => response.json())
                 .then(data => {
                     // Rellena los datos en el formulario del modal
@@ -110,7 +110,7 @@
             };
 
             //const url = compra.nIdCompra === 0 ? '/Compra' : `/Compra/Update/${compra.nIdCompra}`;
-            const url = 'Compra/';
+            const url = '/Compra';
             const method = compra.nIdCompra === 0 ? 'POST' : 'PUT';
 
             fetch(url, {
@@ -133,7 +133,7 @@
 
         function deleteCompra(id) {
             if (confirm('¿Estás seguro de que deseas eliminar esta compra?')) {
-                fetch(`Compra/${id}`, { method: 'DELETE' })
+                fetch(`/Compra/${id}`, { method: 'DELETE' })
                     .then(response => {
                         if (response.ok) {
                             location.reload();

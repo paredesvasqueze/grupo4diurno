@@ -27,6 +27,20 @@ namespace CapaDomain
            
         }
 
+        public Compra GetCompraId(int nIdCompra)
+        {
+            try
+            {
+                return _CompraRepository.GetCompraId(nIdCompra);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
         public int InsertarCompra(Compra oCompra)
         {
             try

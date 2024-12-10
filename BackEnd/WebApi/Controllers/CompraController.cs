@@ -22,6 +22,13 @@ namespace WebApi.Controllers
             return Ok(Compras);
         }
 
+        [HttpGet("GetCompraId/{nIdCompra}")]
+        public IActionResult GetCompraId(int nIdCompra)
+        {
+            var oCompra = _CompraDomain.GetCompraId(nIdCompra);
+            return Ok(oCompra);
+        }
+
         [HttpPost("InsertarCompra")]
         public IActionResult InsertarCompra(Compra oCompra)
         {

@@ -39,6 +39,24 @@ namespace CapaDatos
             }
         }
 
+        public Compra GetCompraId(int nIdCompra)
+        {
+            var Compra = new List<Compra>();
+
+            using (var connection = _conexionSingleton.GetConnection())
+            {
+                connection.Open();
+                Compra Item = new Compra();
+                var query = "GetCompraById";
+                var param = new DynamicParameters();
+                param.Add("@nIdCompra", nIdCompra);
+                //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
+                Item = SqlMapper.QueryFirstOrDefault<Compra>(connection, query, param, commandType: CommandType.StoredProcedure);
+                return Item;
+
+            }
+        }
+
         public int InsertarCompra(Compra oCompra)
         {
             using (var connection = _conexionSingleton.GetConnection())

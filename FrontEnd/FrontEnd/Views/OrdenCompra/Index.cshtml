@@ -86,14 +86,14 @@
 
             function openEditModal(id) {
                 // Obtener los datos de la orden con el ID proporcionado
-                fetch(`/OrdenCompra/GetOrdenComprasById/${id}`)
+                fetch(`/OrdenCompra/GetOrdenCompraById/${id}`)
                     .then(response => response.json())
                     .then(data => {
                         // Rellenar el formulario del modal con los datos recibidos
                         document.getElementById('nIdOrdenCompra').value = data.nIdOrdenCompra;
                         document.getElementById('nIdProveedor').value = data.nIdProveedor;
                         document.getElementById('dFecha').value = data.dFecha ? new Date(data.dFecha).toISOString().split('T')[0] : '';
-                        document.getElementById('pTotal').value = data.pTotal;
+                        document.getElementById('pTotal').value = data.pTotal
 
                         // Mostrar el modal de edición
                         $('#ordenCompraModal').modal('show');
